@@ -18,6 +18,7 @@
     <PackageReference Include="HtmlTags.AspNetCore" Version="6.0.0" />
     <!--<PackageReference Include="HtmlTags.AspNetCore" Version="5.0.0" />-->
     <PackageReference Include="MediatR" Version="4.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.AspNetCore.Mvc" Version="4.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />

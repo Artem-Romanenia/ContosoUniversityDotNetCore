@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using AutoMapper;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
@@ -8,6 +9,17 @@ namespace ContosoUniversity.Features.Courses
 {
     public class Create
     {
+        public class Query : IRequest<Command>
+        { }
+
+        public class QueryHandler : AsyncRequestHandler<Query, Command>
+        {
+            protected override Task<Command> HandleCore(Query request)
+            {
+                return Task.FromResult(new Command());
+            }
+        }
+
         public class Command : IRequest<int>
         {
             [IgnoreMap]

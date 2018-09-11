@@ -11,6 +11,17 @@ namespace ContosoUniversity.Features.Students
 {
     public class Create
     {
+        public class Query : IRequest<Command>
+        { }
+
+        public class QueryHandler : AsyncRequestHandler<Query, Command>
+        {
+            protected override Task<Command> HandleCore(Query request)
+            {
+                return Task.FromResult(new Command());
+            }
+        }
+
         public class Command : IRequest<int>
         {
             public string LastName { get; set; }
@@ -28,8 +39,6 @@ namespace ContosoUniversity.Features.Students
                 RuleFor(m => m.LastName).NotNull().Length(1, 50);
                 RuleFor(m => m.FirstMidName).NotNull().Length(1, 50);
                 RuleFor(m => m.EnrollmentDate).NotNull();
-
-
             }
         }
 

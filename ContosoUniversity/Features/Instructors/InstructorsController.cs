@@ -10,14 +10,13 @@ namespace ContosoUniversity.Features.Instructors
 
         public InstructorsController(IMediator mediator) => _mediator = mediator;
 
-        public async Task<IActionResult> Index(Index.Query query) 
-            => View(await _mediator.Send(query));
+        //Part of the Instructors Controller is kept here intentionally to demonstrate another aspect of MediatR Mvc behavior.
+        //As CreateEdit.Query and CreateEdit.Command requests are handled here explicitly, they will be ignored by MediatR Mvc.
+        //Urls GET: /Instructors/CreateEdit/{id} and POST: /Instructors/CreateEdit will not be available.
+        //This behavior can be disabled by using DisableHandledRequestDiscovery* methods in Mediatr Mvc feature provider settings.
+        //See github Wiki for more info.
 
-        // GET: Instructors/Details/5
-        public async Task<IActionResult> Details(Details.Query query)
-            => View(await _mediator.Send(query));
-
-        public async Task<IActionResult> Create() 
+        public async Task<IActionResult> Create()
             => View(nameof(CreateEdit), await _mediator.Send(new CreateEdit.Query()));
 
         [HttpPost]
@@ -29,23 +28,12 @@ namespace ContosoUniversity.Features.Instructors
             return this.RedirectToActionJson(nameof(Index));
         }
 
-        public async Task<IActionResult> Edit(CreateEdit.Query query) 
+        public async Task<IActionResult> Edit(CreateEdit.Query query)
             => View(nameof(CreateEdit), await _mediator.Send(query));
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CreateEdit.Command command)
-        {
-            await _mediator.Send(command);
-
-            return this.RedirectToActionJson(nameof(Index));
-        }
-        public async Task<IActionResult> Delete(Delete.Query query) 
-            => View(await _mediator.Send(query));
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Delete(Delete.Command command)
         {
             await _mediator.Send(command);
 

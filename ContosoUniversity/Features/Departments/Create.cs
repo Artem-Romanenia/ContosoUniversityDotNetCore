@@ -12,6 +12,17 @@ namespace ContosoUniversity.Features.Departments
 {
     public class Create
     {
+        public class Query : IRequest<Command>
+        { }
+
+        public class QueryHandler : AsyncRequestHandler<Query, Command>
+        {
+            protected override Task<Command> HandleCore(Query request)
+            {
+                return Task.FromResult(new Command());
+            }
+        }
+
         public class Validator : AbstractValidator<Command>
         {
             public Validator()

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +10,9 @@ using FluentValidation.AspNetCore;
 using HtmlTags;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using MediatR.Extensions.Microsoft.AspNetCore.Mvc;
+using ContosoUniversity.Api;
+using OdeToCode.AddFeatureFolders;
 
 namespace ContosoUniversity
 {
@@ -43,9 +42,11 @@ namespace ContosoUniversity
                     opt.Filters.Add(typeof(DbContextTransactionFilter));
                     opt.Filters.Add(typeof(ValidatorActionFilter));
                     opt.ModelBinderProviders.Insert(0, new EntityModelBinderProvider());
+                    opt.AddMediatrMvcConvention(new GenericConvention());
                 })
-                .AddFeatureFolders()
-                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); });
+                .AddFeatureFolders(new FeatureFolderOptions() { DeriveFeatureFolderName = GenericConvention.DeriveFeatureFolderName })
+                .AddFluentValidation(cfg => { cfg.RegisterValidatorsFromAssemblyContaining<Startup>(); })
+                .AddMediatrMvcGenericController(new GenericControllerFeatureProvider(services));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
